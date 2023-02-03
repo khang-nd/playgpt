@@ -12,6 +12,7 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -55,17 +56,19 @@ export default function Home() {
       },
     ]);
 
-    const reply = await fetch(process.env.NEXT_PUBLIC_API_URL + "/chat", {
-      method: "POST",
-      body: JSON.stringify({ message: textContent }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.text());
+    const reply = await axios.post(
+      process.env.NEXT_PUBLIC_API_URL + "/chat",
+      { message: textContent },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     setIsloading(false);
-    setResponse(reply);
+    setResponse(reply.data);
   }
 
   return (
