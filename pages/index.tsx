@@ -1,14 +1,10 @@
 import {
-  Avatar,
   ChatContainer,
-  Conversation,
-  ConversationList,
   MainContainer,
   Message,
   MessageInput,
   MessageList,
   MessageModel,
-  Sidebar,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -18,12 +14,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [messages, setMessages] = useState<MessageModel[]>([]);
   const [response, setResponse] = useState("");
-  const [lastMessage, setLastMessage] = useState<MessageModel | null>(null);
   const [isloading, setIsloading] = useState(false);
-
-  useEffect(() => {
-    setLastMessage(messages[messages.length - 1]);
-  }, [messages]);
 
   useEffect(() => {
     if (!response) return;
@@ -72,23 +63,8 @@ export default function Home() {
   }
 
   return (
-    <main style={{ height: "100vh" }}>
+    <main>
       <MainContainer>
-        <Sidebar position="left">
-          <ConversationList>
-            <Conversation
-              name="ChatGPT"
-              lastSenderName={lastMessage?.sender}
-              info={lastMessage?.message}
-            >
-              <Avatar
-                src="https://i.pinimg.com/originals/90/76/20/907620c9b0163f18f40db959bc76d983.png"
-                name="Joe"
-                status="available"
-              />
-            </Conversation>
-          </ConversationList>
-        </Sidebar>
         <ChatContainer>
           <MessageList
             typingIndicator={
